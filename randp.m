@@ -19,6 +19,9 @@ function [R,pdf] = randp(in,N,mFirst,lambda)
 %   yields a more "peaky" distribution, lower lambda yields a more uniform
 %   distribution (with lambda = 0 being fully uniform). 
 % 
+%   [R,pdf] = RANDP(...) also returns the probability density function as a
+%   function handle.
+% 
 %   Note: RANDP takes ~10-50 times longer than randt. Use care with large N.
 %
 %   Example: Based purely on guesstimates that include a best guess and
@@ -44,7 +47,7 @@ function [R,pdf] = randp(in,N,mFirst,lambda)
 %     invprctile - http://www.mathworks.com/matlabcentral/fileexchange/41131,
 %     randraw    - http://www.mathworks.com/matlabcentral/fileexchange/7309.
 % 
-%   RANDP([a m b],[M,N,...],mFirst,lambda)
+%   [R,pdf] = RANDP([a m b],[M,N,...],mFirst,lambda)
 
 %   References: 
 %     NASA report: "Analytic Method for Probabilistic Cost and Schedule Risk
