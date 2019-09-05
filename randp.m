@@ -106,7 +106,7 @@ else
     
     alph = (mu - a).*(2*m - a - b) ./ ((m - mu).*(b - a));
     
-    ind = abs(1 - m./mu) < eps; % i.e. m==mu, practically.
+    ind = abs(1 - m./mu) <= eps; % i.e. m==mu, practically.
     alph(ind) = lambda./2 + 1;
     
     bet = alph.*(b - mu) ./ (mu - a);
