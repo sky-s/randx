@@ -98,20 +98,26 @@ end
 
 u = rand(N);
 
+span = b - a;
 if isnan(m)
-    R = a + u*(b-a);
-    m = (a + b)/2;
+    R = a + u.*span;
+    if mFirst
+        R(1) = (a + b)/2;
+    end
+    return
 else
-    mu = (a + lambda.*m + b) ./ (lambda + 2);
+    mn = (m - a)./span;
     
-    alph = (mu - a).*(2*m - a - b) ./ ((m - mu).*(b - a));
+    mu = (lambda.*mn + 1) ./ (lambda + 2);
     
-    ind = abs(1 - m./mu) <= eps; % i.e. m==mu, practically.
+    alph = mu.*(2*mn - 1) ./ (mn - mu);
+    
+    ind = abs(1 - mn./mu) <= eps; % i.e. m==mu, practically.
     alph(ind) = lambda./2 + 1;
     
-    bet = alph.*(b - mu) ./ (mu - a);
+    bet = alph.*(1 - mu) ./ mu;
   
-    R = a + (b - a).*betaincinv(u,alph,bet);
+    R = a + span.*betaincinv(u,alph,bet);
 end
 
 if mFirst
@@ -121,6 +127,6 @@ end
 if nargout > 1
     % Return pdf as function handle.
     pdf = @(x) ( (x-a).^(alph-1)  .*  (b-x).^(bet-1) )   ./...
-               ( (b-a).^(alph+bet-1)  .*  beta(alph,bet) );
+               (  span.^(alph+bet-1)  .*  beta(alph,bet) );
 end
 
